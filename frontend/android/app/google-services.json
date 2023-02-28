@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "798930212827",
+    "project_id": "amar-dokan-66f54",
+    "storage_bucket": "amar-dokan-66f54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798930212827:android:6579c95e200a9fce9839fe",
+        "android_client_info": {
+          "package_name": "com.example.frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "798930212827-n86167akolncmdm3mqveuvu4qsoi9u64.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.frontend",
+            "certificate_hash": "5e7baa4cc1aec173d63d65be847a297035bd5c82"
+          }
+        },
+        {
+          "client_id": "798930212827-qd141c0lsnl0a1n1kcm24kgttv566dpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyPnjwNyIKKDNUIDOs4aDfGfL00tn9NW4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "798930212827-qd141c0lsnl0a1n1kcm24kgttv566dpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
