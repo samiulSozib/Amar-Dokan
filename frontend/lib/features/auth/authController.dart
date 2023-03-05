@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/features/auth/authServices.dart';
@@ -48,6 +51,7 @@ class AuthController extends GetxController {
       isLoading(true);
       String token = await AuthServices.signIn(
           context: context, phone: phone, password: password, type: type);
+      print(token);
       if (token != "") {
         if (type == "admin") {
           isLoading(false);
@@ -62,6 +66,29 @@ class AuthController extends GetxController {
         }
       }
       isLoading(false);
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  Future<void> getUser(
+      {required BuildContext context, required String token}) async {
+    try {
+      isLoading(true);
+      var token = box.read("token");
+      if (token == "" || token == null) {
+        Get.toNamed(adminSignInScreen);
+      }
+      var result = await AuthServices.getUser(context: context, token: token);
+
+      var userType = result['type'];
+      if (userType == 'dokanAdmin') {
+        Get.toNamed(adminHomeScreen);
+      } else if (userType == "staff") {
+        Get.toNamed(staffHomeScreen);
+      } else {
+        Get.toNamed(adminSignInScreen);
+      }
     } finally {
       isLoading(false);
     }

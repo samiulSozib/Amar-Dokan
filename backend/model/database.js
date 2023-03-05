@@ -7,19 +7,19 @@ const DB_PASSWORD = process.env.DATABASE_PASSWORD
 
 
 
-// const sequelize = new Sequelize("amar_dokan", "root", "", {
-//     host: 'localhost',
-//     dialect: 'mysql',
-//     pool: { max: 5, min: 0, idle: 1000 }
-// })
+const sequelize = new Sequelize("amar_dokan", "root", "", {
+    host: 'localhost',
+    dialect: 'mysql',
+    pool: { max: 5, min: 0, idle: 1000 }
+})
 
 //
-const sequelize = new Sequelize("myallpr1_amar_dokan", "myallpr1_amar_dokan", "E-qETuillYNX", {
-        host: 'localhost',
-        dialect: 'mysql',
-        pool: { max: 5, min: 0, idle: 10000 }
-    })
-    //
+// const sequelize = new Sequelize("myallpr1_amar_dokan", "myallpr1_amar_dokan", "E-qETuillYNX", {
+//         host: 'localhost',
+//         dialect: 'mysql',
+//         pool: { max: 5, min: 0, idle: 10000 }
+//     })
+//
 
 sequelize.authenticate()
     .then(() => {

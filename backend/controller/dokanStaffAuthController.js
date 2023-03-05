@@ -16,7 +16,9 @@ exports.signInDokanStaff = async(req, res, next) => {
                 .status(400)
                 .json({ msg: "User with this phone does not exist!" });
         }
+
         const isMatch = await bcrypt.compare(password, staff.password)
+        console.log(isMatch)
         if (!isMatch) {
             return res.status(400).json({ msg: "Incorrect password." });
         }

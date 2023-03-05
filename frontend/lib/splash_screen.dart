@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/features/auth/authController.dart';
 import 'package:frontend/route.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -15,24 +16,26 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
+  final AuthController _controller = Get.put(AuthController());
 
-  // Future chooseScreen() async {
-  //   var userId = box.read('uid');
-  //   if (userId == null) {
-  //     Get.toNamed(onbording);
-  //   } else {
-  //     Get.toNamed(mainHomeScreen);
-  //   }
-  // }
+  Future chooseScreen() async {
+    var token = box.read("token");
+    if (token == null || token == "") {
+      Get.toNamed(adminSignInScreen);
+    } else {
+      await _controller.getUser(context: context, token: token);
+      //Get.toNamed(adminSignInScreen);
+    }
+    print(token);
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     Future.delayed(
       const Duration(seconds: 3),
-      () => Get.toNamed(adminSignInScreen),
+      () => chooseScreen(),
     );
+    super.initState();
   }
 
   @override
