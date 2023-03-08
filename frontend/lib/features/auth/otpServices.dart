@@ -30,16 +30,17 @@ class AuthHelper {
                       controller: _controller,
                     ),
                     TextButton(
-                        onPressed: () async {
-                          PhoneAuthCredential _phoneAuthCredential =
-                              PhoneAuthProvider.credential(
-                                  verificationId: verificationId,
-                                  smsCode: _controller.text);
-                          UserCredential _user = await auth
-                              .signInWithCredential(_phoneAuthCredential);
-                          print(_user);
-                        },
-                        child: Text("Submit"))
+                      onPressed: () async {
+                        PhoneAuthCredential _phoneAuthCredential =
+                            PhoneAuthProvider.credential(
+                                verificationId: verificationId,
+                                smsCode: _controller.text);
+                        UserCredential _user = await auth
+                            .signInWithCredential(_phoneAuthCredential);
+                        print(_user);
+                      },
+                      child: Text("Submit"),
+                    ),
                   ],
                 ),
               );

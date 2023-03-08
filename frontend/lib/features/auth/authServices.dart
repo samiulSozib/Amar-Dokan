@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:frontend/consts/app_string.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +13,8 @@ class AuthServices {
   static var client = http.Client();
 
   //static var baseURL = 'http://amar-dokan.myallproject.xyz/api';
-  static var baseURL = 'http://192.168.43.68:2000/api';
+  //static var baseURL = 'http://192.168.43.68:2000/api';
+  static var baseURL = AppString.baseURL;
   static var token = "";
 
   static Future<String> registration(

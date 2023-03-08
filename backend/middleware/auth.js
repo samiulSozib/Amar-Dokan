@@ -14,6 +14,7 @@ const auth = async(req, res, next) => {
         console.log(verified)
         req.userId = verified.id;
         req.userType = verified.type
+        req.dokanId = verified.dokanId
         req.token = token;
         next();
     } catch (err) {

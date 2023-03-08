@@ -58,7 +58,7 @@ exports.signInDokanAdmin = async(req, res, next) => {
             return res.status(400).json({ msg: "Incorrect password." });
         }
 
-        const token = jwt.sign({ id: dokan.id, type: 'dokanAdmin' }, "tokenSecretKey")
+        const token = jwt.sign({ id: dokan.id, dokanId: dokan.id, type: 'dokanAdmin' }, "tokenSecretKey")
             //const token = jwt.sign({ dokan }, "tokenSecretKey");
         return res.status(200).json({ token })
             //return res.status(200).json({ token  })

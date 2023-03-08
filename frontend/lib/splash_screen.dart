@@ -16,17 +16,14 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   final box = GetStorage();
-  final AuthController _controller = Get.put(AuthController());
 
   Future chooseScreen() async {
     var token = box.read("token");
     if (token == null || token == "") {
       Get.toNamed(adminSignInScreen);
     } else {
-      await _controller.getUser(context: context, token: token);
-      //Get.toNamed(adminSignInScreen);
+      Get.toNamed(homeScreen);
     }
-    print(token);
   }
 
   @override

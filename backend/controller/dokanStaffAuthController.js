@@ -18,12 +18,12 @@ exports.signInDokanStaff = async(req, res, next) => {
         }
 
         const isMatch = await bcrypt.compare(password, staff.password)
-        console.log(isMatch)
+        console.log(staff.dokanId)
         if (!isMatch) {
             return res.status(400).json({ msg: "Incorrect password." });
         }
 
-        const token = jwt.sign({ id: staff.id, type: 'staff' }, "tokenSecretKey")
+        const token = jwt.sign({ id: staff.id, dokanId: staff.dokanId, type: 'staff' }, "tokenSecretKey")
             //const token = jwt.sign({ staff }, "tokenSecretKey")
         return res.status(200).json({ token })
             //return res.status(200).json({ token })

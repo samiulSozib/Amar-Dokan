@@ -57,12 +57,12 @@ class AuthController extends GetxController {
           isLoading(false);
           box.write("token", token);
           Fluttertoast.showToast(msg: "Login Success");
-          Get.toNamed(adminHomeScreen);
+          Get.toNamed(homeScreen);
         } else {
           isLoading(false);
           box.write("token", token);
           Fluttertoast.showToast(msg: "Login Success");
-          Get.toNamed(staffHomeScreen);
+          Get.toNamed(homeScreen);
         }
       }
       isLoading(false);
@@ -74,23 +74,26 @@ class AuthController extends GetxController {
   Future<void> getUser(
       {required BuildContext context, required String token}) async {
     try {
-      isLoading(true);
-      var token = box.read("token");
+      //var token = box.read("token");
       if (token == "" || token == null) {
         Get.toNamed(adminSignInScreen);
       }
       var result = await AuthServices.getUser(context: context, token: token);
 
-      var userType = result['type'];
-      if (userType == 'dokanAdmin') {
-        Get.toNamed(adminHomeScreen);
-      } else if (userType == "staff") {
-        Get.toNamed(staffHomeScreen);
-      } else {
-        Get.toNamed(adminSignInScreen);
-      }
-    } finally {
-      isLoading(false);
-    }
+      // var userType = result['type'];
+      // if (userType == 'dokanAdmin' || userType == 'staff') {
+      //   Get.toNamed(homeScreen);
+      // } else {
+      //   Get.toNamed(adminSignInScreen);
+      // }
+    } finally {}
+  }
+
+  Future<void> logout() async {
+    try {
+      box.remove("token");
+      box.remove("user");
+      Get.toNamed(adminSignInScreen);
+    } finally {}
   }
 }

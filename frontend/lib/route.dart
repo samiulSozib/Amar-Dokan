@@ -1,24 +1,20 @@
-import 'package:frontend/features/admin_home/admin_home_screen.dart';
 import 'package:frontend/features/auth/registration_screen.dart';
 import 'package:frontend/features/auth/signin_screen.dart';
-import 'package:frontend/features/staff_home/staff_home_screen.dart';
+import 'package:frontend/features/home/pages/home_screen.dart';
+
 import 'package:frontend/splash_screen.dart';
 import 'package:get/get.dart';
 
 const String splashScreen = '/splash-screen';
 const String adminRegistrationScreen = '/admin-registration-screen';
 const String adminSignInScreen = '/sign-in-screen';
-const String adminHomeScreen = '/admin-home-screen';
-const String staffHomeScreen = '/staff-home-screen';
+
+const String homeScreen = '/home-screen';
 
 List<GetPage> pages = [
   GetPage(
-    name: adminHomeScreen,
-    page: () => const AdminHomeScreen(),
-  ),
-  GetPage(
-    name: staffHomeScreen,
-    page: () => const StaffHomeScreen(),
+    name: homeScreen,
+    page: () => const HomeScreen(),
   ),
   GetPage(
     name: adminSignInScreen,
