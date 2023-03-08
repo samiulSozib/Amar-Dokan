@@ -45,6 +45,7 @@ db.sequelize.sync({ force: false })
 db.dokanAdmin = require('./dokanAdmin')(sequelize, DataTypes)
 db.dokanStaff = require('./dokanStaff')(sequelize, DataTypes)
 db.customer = require('./customer')(sequelize, DataTypes)
+db.transaction = require('./transaction')(sequelize, DataTypes)
 
 
 module.exports = db

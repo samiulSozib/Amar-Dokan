@@ -8,6 +8,7 @@ exports.addCustomer = async(req, res, next) => {
 
         const customer = await Customer.findAll({
             where: {
+                dokanId: dokanId,
                 customerPhone: customerPhone,
                 status: '1'
             }
@@ -32,6 +33,16 @@ exports.addCustomer = async(req, res, next) => {
 
         }
 
+    } catch (e) {
+        return res.status(500).json({ msg: 'something wrong' })
+    }
+}
+
+
+exports.getAllCustomer = async(req, res, next) => {
+    try {
+        const customers = await Customer.findAll({ where: { status: '1', dokanId: req.dokanId } })
+        return res.status(200).json(customers)
     } catch (e) {
         return res.status(500).json({ msg: 'something wrong' })
     }
