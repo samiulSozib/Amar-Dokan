@@ -2,9 +2,14 @@ const dokanAdminAuthRoute = require('./dokanAdminAuthRoute')
 const dokanStaffAuthRoute = require('./dokanStaffAuthRoute')
 const dokanStaffManageRoute = require('./dokanStaffManageRoute')
 const customerRoute = require('./customerRoute')
+const transactionRoute = require('./transactionRoute')
 
 
 const routes = [{
+        path: '/api/transaction',
+        handler: transactionRoute
+    },
+    {
         path: '/api/customer',
         handler: customerRoute
     },

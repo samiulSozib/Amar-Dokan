@@ -1,13 +1,18 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:frontend/features/home/pages/customer_list/customer_list_controller.dart';
+import 'package:frontend/features/home/pages/customer_list/customer_transaction_history.dart';
 import 'package:frontend/model/customer.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../route.dart';
 
 class CustomerListScreen extends StatefulWidget {
   const CustomerListScreen({super.key});
@@ -73,215 +78,240 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                         child: CircularProgressIndicator(),
                       )
                     : Expanded(
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return SizedBox(
-                              height: screenHeight * 0.02,
-                            );
-                          },
-                          itemCount: _customerListController.allCustomer.length,
-                          itemBuilder: (context, index) {
-                            return ClipPath(
-                              clipper: SideCutClipper(),
-                              child: Container(
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.grey,
-                                ),
-                                child: Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  _customerListController
-                                                      .allCustomer[index].id
-                                                      .toString(),
-                                                  style: GoogleFonts.oswald(
-                                                    fontSize:
-                                                        screenWidth * 0.04,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  _customerListController
-                                                      .allCustomer[index]
-                                                      .customerName
-                                                      .toString(),
-                                                  style: GoogleFonts.oswald(
-                                                    fontSize:
-                                                        screenWidth * 0.04,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  _customerListController
-                                                      .allCustomer[index]
-                                                      .customerPhone
-                                                      .toString(),
-                                                  style: GoogleFonts.oswald(
-                                                    fontSize:
-                                                        screenWidth * 0.04,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  _customerListController
-                                                      .allCustomer[index]
-                                                      .customerAddress
-                                                      .toString(),
-                                                  style: GoogleFonts.oswald(
-                                                    fontSize:
-                                                        screenWidth * 0.04,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            const Spacer(),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  "Balance: ${_customerListController.allCustomer[index].totalAmount}",
-                                                  style: GoogleFonts.oswald(
-                                                    fontSize:
-                                                        screenWidth * 0.035,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                  ),
-                                                ),
-                                                const Spacer(),
-                                                GestureDetector(
-                                                  onTap: () {},
-                                                  child: const Icon(
-                                                    Icons.mail,
-                                                    color: Colors.black,
-                                                  ),
-                                                )
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 100,
-                                        width: 2,
-                                        color: Colors.black,
-                                      ),
-                                      Expanded(
-                                        flex: 1,
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
+                        child: Obx(
+                          () => ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return SizedBox(
+                                height: screenHeight * 0.02,
+                              );
+                            },
+                            itemCount:
+                                _customerListController.allCustomer.length,
+                            itemBuilder: (context, index) {
+                              return ClipPath(
+                                clipper: SideCutClipper(),
+                                child: Container(
+                                  height: 200,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.grey,
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(12.0),
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
                                           child: Column(
                                             children: [
                                               Row(
                                                 children: [
-                                                  InkWell(
-                                                    onTap: () {
-                                                      _customDialog(
-                                                          _customerListController
-                                                                  .allCustomer[
-                                                              index],
-                                                          "add");
-                                                    },
-                                                    child: Container(
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              shape: BoxShape
-                                                                  .circle),
-                                                      child: const Padding(
-                                                        padding: EdgeInsets.all(
-                                                            12.0),
-                                                        child: Icon(Icons.add),
-                                                      ),
+                                                  Text(
+                                                    _customerListController
+                                                        .allCustomer[index].id
+                                                        .toString(),
+                                                    style: GoogleFonts.oswald(
+                                                      fontSize:
+                                                          screenWidth * 0.04,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                   ),
-                                                  const Spacer(),
-                                                  InkWell(
-                                                    onTap: () {
-                                                      _customDialog(
-                                                          _customerListController
-                                                                  .allCustomer[
-                                                              index],
-                                                          "remove");
-                                                    },
-                                                    child: Container(
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                              color:
-                                                                  Colors.white,
-                                                              shape: BoxShape
-                                                                  .circle),
-                                                      child: const Padding(
-                                                        padding: EdgeInsets.all(
-                                                            12.0),
-                                                        child:
-                                                            Icon(Icons.remove),
-                                                      ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    _customerListController
+                                                        .allCustomer[index]
+                                                        .customerName
+                                                        .toString(),
+                                                    style: GoogleFonts.oswald(
+                                                      fontSize:
+                                                          screenWidth * 0.04,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    _customerListController
+                                                        .allCustomer[index]
+                                                        .customerPhone
+                                                        .toString(),
+                                                    style: GoogleFonts.oswald(
+                                                      fontSize:
+                                                          screenWidth * 0.04,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    _customerListController
+                                                        .allCustomer[index]
+                                                        .customerAddress
+                                                        .toString(),
+                                                    style: GoogleFonts.oswald(
+                                                      fontSize:
+                                                          screenWidth * 0.04,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                               const Spacer(),
-                                              InkWell(
-                                                child: Container(
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(12.0),
-                                                    child: Text(
-                                                      "History",
-                                                      style: GoogleFonts.oswald(
-                                                        fontSize:
-                                                            screenWidth * 0.04,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "Balance: ${_customerListController.allCustomer[index].totalAmount}",
+                                                    style: GoogleFonts.oswald(
+                                                      fontSize:
+                                                          screenWidth * 0.035,
+                                                      color: Colors.black,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                     ),
                                                   ),
-                                                ),
+                                                  const Spacer(),
+                                                  GestureDetector(
+                                                    onTap: () {},
+                                                    child: const Icon(
+                                                      Icons.mail,
+                                                      color: Colors.black,
+                                                    ),
+                                                  )
+                                                ],
                                               )
                                             ],
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        Container(
+                                          height: 100,
+                                          width: 2,
+                                          color: Colors.black,
+                                        ),
+                                        Expanded(
+                                          flex: 1,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    InkWell(
+                                                      onTap: () {
+                                                        _customDialog(
+                                                            _customerListController
+                                                                    .allCustomer[
+                                                                index],
+                                                            "add");
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                shape: BoxShape
+                                                                    .circle),
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  12.0),
+                                                          child:
+                                                              Icon(Icons.add),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const Spacer(),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        _customDialog(
+                                                            _customerListController
+                                                                    .allCustomer[
+                                                                index],
+                                                            "remove");
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                                color: Colors
+                                                                    .white,
+                                                                shape: BoxShape
+                                                                    .circle),
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  12.0),
+                                                          child: Icon(
+                                                              Icons.remove),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const Spacer(),
+                                                InkWell(
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                      customerTransectionHistory,
+                                                      arguments:
+                                                          CustomerTransactionHostory(
+                                                        customer:
+                                                            _customerListController
+                                                                    .allCustomer[
+                                                                index],
+                                                      ),
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                      color: Colors.white,
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.all(12.0),
+                                                      child: Text(
+                                                        "History",
+                                                        style:
+                                                            GoogleFonts.oswald(
+                                                          fontSize:
+                                                              screenWidth *
+                                                                  0.04,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
               ),
@@ -333,11 +363,12 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
           ),
           InkWell(
             onTap: () {
-              print(customer.dokanId);
-              print(customer.id);
-              print(_amountController.text);
-              print(_noteController.text);
-              print(type);
+              _customerListController.createTransaction(
+                  dokanId: customer.dokanId!,
+                  customerId: customer.id!,
+                  transactionAmount: double.parse(_amountController.text),
+                  notes: _noteController.text,
+                  type: type);
             },
             child: Container(
               color: Colors.cyan,

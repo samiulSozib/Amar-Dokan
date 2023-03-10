@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final customer = customerFromJson(jsonString);
-
 import 'dart:convert';
 
 class Customer {
@@ -22,7 +18,7 @@ class Customer {
   final String? customerName;
   final String? customerPhone;
   final String? customerAddress;
-  final int? totalAmount;
+  final double? totalAmount;
   final String? status;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -33,7 +29,7 @@ class Customer {
     String? customerName,
     String? customerPhone,
     String? customerAddress,
-    int? totalAmount,
+    double? totalAmount,
     String? status,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -61,7 +57,7 @@ class Customer {
         customerName: json["customerName"],
         customerPhone: json["customerPhone"],
         customerAddress: json["customerAddress"],
-        totalAmount: json["totalAmount"],
+        totalAmount: json["totalAmount"].toDouble(),
         status: json["status"],
         createdAt: json["createdAt"] == null
             ? null

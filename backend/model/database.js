@@ -47,5 +47,14 @@ db.dokanStaff = require('./dokanStaff')(sequelize, DataTypes)
 db.customer = require('./customer')(sequelize, DataTypes)
 db.transaction = require('./transaction')(sequelize, DataTypes)
 
+// one to many relation between customer table and transaction table
+db.customer.hasMany(db.transaction, { foreignKey: 'customerId' });
+db.transaction.belongsTo(db.customer, { foreignKey: 'customerId' })
+
+// one to one relation between satff and transaction table 
+db.dokanStaff.hasOne(db.transaction)
+db.transaction.belongsTo(db.dokanStaff)
+
+
 
 module.exports = db

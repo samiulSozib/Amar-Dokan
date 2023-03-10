@@ -6,15 +6,15 @@ module.exports = (sequelize, DataTypes) => {
         customerId: {
             type: DataTypes.INTEGER
         },
-        dokanAdminId: {
-            type: DataTypes.INTEGER
-        },
         dokanStaffId: {
             type: DataTypes.INTEGER
         },
         transactionAmount: {
             type: DataTypes.DOUBLE,
         },
+        notes: {
+            type: DataTypes.STRING
+        }
 
     }, {
         timestamps: true

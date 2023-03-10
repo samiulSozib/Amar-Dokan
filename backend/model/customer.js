@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING
         },
         totalAmount: {
-            type: DataTypes.INTEGER,
-            default: 0
+            type: DataTypes.DOUBLE,
+            default: 0.0
         },
         status: {
             type: DataTypes.STRING
