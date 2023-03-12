@@ -21,8 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     print(box.read("token"));
-    _authController.getUser(context: context, token: box.read("token"));
+    //_authController.getUser(context: context, token: box.read("token"));
     // TODO: implement initState
+    _authController.getUser();
     super.initState();
   }
 

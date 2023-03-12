@@ -55,6 +55,7 @@ db.transaction.belongsTo(db.customer, { foreignKey: 'customerId' })
 db.dokanStaff.hasOne(db.transaction)
 db.transaction.belongsTo(db.dokanStaff)
 
-
+db.dokanAdmin.hasOne(db.dokanStaff, { foreignKey: 'dokanId' })
+db.dokanStaff.belongsTo(db.dokanAdmin, { foreignKey: 'dokanId' })
 
 module.exports = db

@@ -73,6 +73,7 @@ class AuthServices {
             },
           ),
         );
+        print(response.statusCode);
         if (response.statusCode == 200) {
           token = jsonDecode(response.body)['token'];
           return token.toString();
@@ -104,8 +105,7 @@ class AuthServices {
     }
   }
 
-  static Future<Map> getUser(
-      {required BuildContext context, required String token}) async {
+  static Future<Map> getUser({required String token}) async {
     Map<String, dynamic> user = {};
     try {
       http.Response response = await http.get(

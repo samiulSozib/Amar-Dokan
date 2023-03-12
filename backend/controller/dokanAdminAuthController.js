@@ -80,7 +80,10 @@ exports.getUser = async(req, res, next) => {
                 return res.status(400).json({ msg: 'something wrong' })
             }
         } else {
-            let staff = await DokanStaff.findByPk(userId)
+            //let staff = await DokanStaff.findByPk(userId)
+            let staff = await DokanAdmin.findAll({
+                include: [{ model: DokanStaff, where: { id: userId } }]
+            })
             if (staff) {
                 return res.status(200).json({ "type": "staff", info: staff })
             } else {

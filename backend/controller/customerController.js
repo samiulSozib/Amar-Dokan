@@ -23,6 +23,7 @@ exports.addCustomer = async(req, res, next) => {
             customerName,
             customerPhone,
             customerAddress,
+            totalAmount: 0,
             status: '1'
         })
 

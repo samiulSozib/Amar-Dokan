@@ -4,6 +4,7 @@ const db = require('../model/database')
 const Transaction = db.transaction
 const Customer = db.customer
 const DokanStaff = db.dokanStaff
+const DokanAdmin = db.dokanAdmin
 
 exports.createTransaction = async(req, res, next) => {
     try {
@@ -97,47 +98,65 @@ exports.getTransactionHistory = async(req, res, next) => {
 exports.getTotalUnpaidTransaction = async(req, res, next) => {
     try {
         let dokanId = req.dokanId
-        let unpaid = await Customer.findAll({
-            where: {
-                [Op.and]: [{ dokanId: dokanId }, {
-                    totalAmount: {
-                        [Op.lt]: 0
-                    }
-                }]
-            }
+
+
+        await sequelize.transaction(async(t) => {
+            let unpaid = await Customer.findAll({
+                attributes: [
+                    [sequelize.fn('sum', sequelize.col('totalAmount')), 'totalAmount'],
+                    [sequelize.fn('count', sequelize.col('totalAmount')), 'count'],
+
+                ],
+
+                where: {
+                    [Op.and]: [{ dokanId: dokanId }, {
+                        totalAmount: {
+                            [Op.lt]: 0
+                        }
+                    }]
+                }
+            })
+            let result = await Customer.findAll({
+                attributes: [
+                    [sequelize.fn('YEAR', sequelize.col('createdAt')), 'Year'],
+                    [sequelize.fn('month', sequelize.col('createdAt')), 'month'],
+                    [sequelize.fn('sum', sequelize.col('totalAmount')), 'totalAmount'],
+                ],
+                group: [sequelize.fn('month', sequelize.col('createdAt'))],
+                where: {
+                    dokanId: dokanId
+                }
+            });
+            res.json({ unpaid: unpaid, months: result })
         })
 
-        res.json(unpaid)
+
     } catch (e) {
         console.log(e)
-        return res.status(200).json({ msg: 'Something Wrong' })
+        return res.status(500).json({ msg: 'Something Wrong' })
     }
 }
 
 
-exports.getEveryMonthTransaction = async(req, res, next) => {
-    try {
-        let result = await Customer.findAll({
-                where: {
-                    createdAt: sequelize.where(
-                        sequelize.fn("YEAR", sequelize.col("createdAt")),
-                        "2023"
-                    ),
-                },
-                attributes: [
-                    ["id"],
-                ],
-                group: ["month"],
-            })
-            .then((result) => {
-                res.json(result)
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        //res.json(result)
-    } catch (e) {
-        console.log(e)
-        return res.status(200).json({ msg: 'Something Wrong' })
-    }
-}
+// exports.getEveryMonthTransaction = async(req, res, next) => {
+//     try {
+
+//         let dokanId = req.dokanId
+//         let result = await Customer.findAll({
+//             attributes: [
+//                 [sequelize.fn('YEAR', sequelize.col('createdAt')), 'Year'],
+//                 [sequelize.fn('month', sequelize.col('createdAt')), 'month'],
+//                 [sequelize.fn('sum', sequelize.col('totalAmount')), 'totalAmount'],
+//             ],
+//             group: [sequelize.fn('month', sequelize.col('createdAt'))],
+//             where: {
+//                 dokanId: dokanId
+//             }
+//         });
+
+//         res.json(result)
+//     } catch (e) {
+//         console.log(e)
+//         return res.status(500).json({ msg: 'Something Wrong' })
+//     }
+// }

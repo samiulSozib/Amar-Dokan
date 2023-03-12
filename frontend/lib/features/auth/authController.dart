@@ -11,6 +11,12 @@ import 'package:get_storage/get_storage.dart';
 class AuthController extends GetxController {
   RxBool isLoading = false.obs;
   final box = GetStorage();
+  @override
+  void onInit() {
+    getUser();
+    // TODO: implement onInit
+    super.onInit();
+  }
 
   Future<void> registration(
       {required BuildContext context,
@@ -66,19 +72,23 @@ class AuthController extends GetxController {
         }
       }
       isLoading(false);
+    } catch (e) {
+      print(e.toString());
     } finally {
       isLoading(false);
     }
   }
 
-  Future<void> getUser(
-      {required BuildContext context, required String token}) async {
+  Future<void> getUser() async {
+    //var token = box.read("token");
     try {
-      //var token = box.read("token");
+      var token = box.read("token");
       if (token == "" || token == null) {
         Get.toNamed(adminSignInScreen);
+      } else {
+        await AuthServices.getUser(token: token);
       }
-      var result = await AuthServices.getUser(context: context, token: token);
+      //var result = await AuthServices.getUser(token: token!);
 
       // var userType = result['type'];
       // if (userType == 'dokanAdmin' || userType == 'staff') {
