@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:frontend/route.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -44,10 +45,10 @@ class _DrawerMenuState extends State<DrawerMenu> {
                     child: Center(
                       child: Column(
                         children: [
-                          Image.network(
-                            "https://cdn.ciroapp.com/storage/2021/02/dokan-logo.png",
-                            height: 80,
-                          ),
+                          // Image.network(
+                          //   "https://cdn.ciroapp.com/storage/2021/02/dokan-logo.png",
+                          //   height: 80,
+                          // ),
                           Text(
                             "Shop Name",
                             style: TextStyle(fontSize: 16),
@@ -65,9 +66,9 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   leading: const Icon(
                     Icons.person,
                   ),
-                  title: const Text('Add Staff'),
+                  title: const Text('Staff'),
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.toNamed(staffScreen);
                   },
                 ),
                 ListTile(

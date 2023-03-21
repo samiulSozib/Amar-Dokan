@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:frontend/features/home/pages/customer_list/customer_list_controller.dart';
 import 'package:frontend/model/customer.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../model/transaction.dart';
 
@@ -25,7 +26,7 @@ class _CustomerTransactionHostoryState
   void initState() {
     _customerListController.fetchAllTransaction(
         dokanId: widget.customer.dokanId!, customerId: widget.customer.id!);
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -33,6 +34,33 @@ class _CustomerTransactionHostoryState
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            PopupMenuButton(
+              itemBuilder: (context) => [
+                const PopupMenuItem<int>(
+                  value: 0,
+                  child: Text(
+                    "Edit",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                const PopupMenuItem<int>(
+                  value: 1,
+                  child: Text(
+                    "Delete",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+              onSelected: (value) {
+                if (value == 0) {
+                } else if (value == 1) {}
+              },
+              color: Colors.white,
+            )
+          ],
+        ),
         body: Column(
           children: [
             Padding(
@@ -90,7 +118,7 @@ class _CustomerTransactionHostoryState
               ),
             ),
             Obx(
-              () => _customerListController.isLoading1.isTrue
+              () => _customerListController.transactions.isEmpty
                   ? const Center(child: CircularProgressIndicator())
                   : Expanded(
                       child: ListView.builder(
@@ -103,21 +131,26 @@ class _CustomerTransactionHostoryState
                                 child: Container(
                                   height: 100,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          color: Colors.white70,
-                                          spreadRadius: 1,
-                                          blurRadius: 10,
-                                        )
-                                      ]),
+                                    borderRadius: BorderRadius.circular(15),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.white70,
+                                        spreadRadius: 1,
+                                        blurRadius: 10,
+                                      ),
+                                    ],
+                                  ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                          "Date: ${_customerListController.transactions[index].createdAt}"),
+                                        getMonthNameFromDate(
+                                            _customerListController
+                                                .transactions[index].createdAt
+                                                .toString()),
+                                      ),
                                       Text(
                                           "Transaction Amount: ${_customerListController.transactions[index].transactionAmount}"),
                                       _customerListController
@@ -143,4 +176,11 @@ class _CustomerTransactionHostoryState
       ),
     );
   }
+}
+
+String getMonthNameFromDate(String createdAt) {
+  DateTime date = DateTime.parse(createdAt);
+
+  String monthName = DateFormat('MMMM').format(date);
+  return '${date.day} $monthName ${date.year}';
 }

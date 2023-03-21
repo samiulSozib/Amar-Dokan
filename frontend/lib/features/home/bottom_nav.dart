@@ -10,7 +10,7 @@ import 'pages/dashboard/dashboard_screen.dart';
 import 'pages/customer_list/customer_list_screen.dart';
 
 class BottomNavController extends StatelessWidget {
-  final RxInt _currentIndex = 1.obs;
+  final RxInt _currentIndex = 0.obs;
 
   final _pages = [
     DashBoardScreen(),

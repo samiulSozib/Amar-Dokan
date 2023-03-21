@@ -41,21 +41,21 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+          padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
           child: Column(
             children: [
               Container(
                 height: screenHeight * 0.06,
                 width: screenWidth,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                 ),
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
                   child: Row(
-                    children: [
+                    children: const [
                       Text(
                         "Search By Name or Id",
                         style: TextStyle(color: Colors.white),
@@ -73,7 +73,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                 height: screenWidth * 0.01,
               ),
               Obx(
-                () => _customerListController.isLoading.isTrue
+                () => _customerListController.allCustomer.isEmpty
                     ? const Center(
                         child: CircularProgressIndicator(),
                       )
@@ -97,7 +97,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                                     color: Colors.grey,
                                   ),
                                   child: Padding(
-                                    padding: EdgeInsets.all(12.0),
+                                    padding: const EdgeInsets.all(12.0),
                                     child: Row(
                                       children: [
                                         Expanded(
@@ -285,7 +285,8 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                                                     ),
                                                     child: Padding(
                                                       padding:
-                                                          EdgeInsets.all(12.0),
+                                                          const EdgeInsets.all(
+                                                              12.0),
                                                       child: Text(
                                                         "History",
                                                         style:

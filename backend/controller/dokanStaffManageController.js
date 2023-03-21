@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt')
 exports.addDokanStaff = async(req, res, next) => {
     try {
         let { staffName, phone, password } = req.body
-        let dokanId = req.dokan.id
+        let dokanId = req.dokanId
+        console.log(dokanId)
         const staff = await DokanStaff.findAll({
             where: {
                 phone: phone,
@@ -34,6 +35,21 @@ exports.addDokanStaff = async(req, res, next) => {
         }
 
     } catch (e) {
-        return res.status(500).json({ error: e.message })
+        return res.status(500).json({ msg: e.message })
+    }
+}
+
+
+exports.getAllStaff = async(req, res, next) => {
+    try {
+        let dokanId = req.dokanId
+        let allStaff = await DokanStaff.findAll({
+            where: {
+                dokanId: dokanId
+            }
+        })
+        return res.status(200).json({ allStaff })
+    } catch (e) {
+        return res.status(500).json({ msg: e.message })
     }
 }

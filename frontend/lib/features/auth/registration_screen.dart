@@ -27,6 +27,13 @@ class _AdminRegistrationScreenState extends State<AdminRegistrationScreen> {
   final TextEditingController _addressController = TextEditingController();
 
   final AuthController _authController = Get.put(AuthController());
+  late bool _passwordVisibility;
+
+  @override
+  void initState() {
+    _passwordVisibility = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,11 +95,41 @@ class _AdminRegistrationScreenState extends State<AdminRegistrationScreen> {
                             type: TextInputType.number,
                             icon: const Icon(Icons.phone_android_outlined),
                           ),
-                          CustomTextField(
-                            controller: _passwordController,
-                            hintText: "Password",
-                            type: TextInputType.text,
-                            icon: const Icon(Icons.key_outlined),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 10, left: 10, right: 10),
+                            child: TextFormField(
+                              controller: _passwordController,
+                              keyboardType: TextInputType.text,
+                              obscureText: !_passwordVisibility,
+                              decoration: InputDecoration(
+                                hintText: "Password",
+                                prefixIcon: const Icon(Icons.key_outlined),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _passwordVisibility =
+                                          !_passwordVisibility;
+                                    });
+                                  },
+                                  icon: Icon(_passwordVisibility
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                ),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.black),
+                                ),
+                              ),
+                              validator: (val) {
+                                if (val == null || val.isEmpty) {
+                                  return 'Enter Password';
+                                }
+                                return null;
+                              },
+                            ),
                           ),
                           CustomTextField(
                             controller: _addressController,

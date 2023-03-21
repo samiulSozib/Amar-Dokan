@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:frontend/features/home/pages/dashboard/dashboardController.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:intl/intl.dart';
 
 import '../../../auth/authController.dart';
 
@@ -18,13 +19,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final AuthController _authController = Get.put(AuthController());
   final DashBoardController _dashBoardController =
       Get.put(DashBoardController());
-  @override
-  void initState() {
-    _authController.getUser();
-    _dashBoardController.getUnpaidInfo();
+  // @override
+  // void initState() {
+  //   _authController.getUser();
+  //   _dashBoardController.getDokanInformation();
+  //   _dashBoardController.getUnpaidInfo();
 
-    super.initState();
-  }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -183,11 +185,20 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            "Year: ${_dashBoardController.unpaidHistoryByMonth[index].year.toString()}",
+                                            getMonthNameFromDate(
+                                                _dashBoardController
+                                                    .unpaidHistoryByMonth[index]
+                                                    .year,
+                                                _dashBoardController
+                                                    .unpaidHistoryByMonth[index]
+                                                    .month),
                                           ),
                                           Text(
-                                            "Month: ${_dashBoardController.unpaidHistoryByMonth[index].month.toString()}",
+                                            "Year: ${_dashBoardController.unpaidHistoryByMonth[index].year.toString()}",
                                           ),
+                                          // Text(
+                                          //   "Month: ${_dashBoardController.unpaidHistoryByMonth[index].month.toString()}",
+                                          // ),
                                         ],
                                       ),
                                       Text(
@@ -207,4 +218,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       ),
     );
   }
+}
+
+String getMonthNameFromDate(int? year, int? month) {
+  DateTime date = DateTime(year!, month!);
+  String monthName = DateFormat('MMMM').format(date);
+  return monthName;
 }

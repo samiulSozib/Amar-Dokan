@@ -62,11 +62,13 @@ class AuthController extends GetxController {
         if (type == "admin") {
           isLoading(false);
           box.write("token", token);
+          await AuthServices.getUser(token: token);
           Fluttertoast.showToast(msg: "Login Success");
           Get.toNamed(homeScreen);
         } else {
           isLoading(false);
           box.write("token", token);
+          await AuthServices.getUser(token: token);
           Fluttertoast.showToast(msg: "Login Success");
           Get.toNamed(homeScreen);
         }

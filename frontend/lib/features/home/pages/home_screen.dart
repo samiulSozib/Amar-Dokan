@@ -18,14 +18,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final AuthController _authController = Get.put(AuthController());
   final box = GetStorage();
-  @override
-  void initState() {
-    print(box.read("token"));
-    //_authController.getUser(context: context, token: box.read("token"));
-    // TODO: implement initState
-    _authController.getUser();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   print(box.read("token"));
+  //   //_authController.getUser(context: context, token: box.read("token"));
+  //   // TODO: implement initState
+  //   _authController.getUser();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

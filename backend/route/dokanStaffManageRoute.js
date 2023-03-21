@@ -1,7 +1,9 @@
 const router = require('express').Router()
 const adminAuth = require('../middleware/adminAuth')
-const { addDokanStaff } = require('../controller/dokanStaffManageController')
+const auth = require('../middleware/auth')
+const { addDokanStaff, getAllStaff } = require('../controller/dokanStaffManageController')
 
-router.post('/add', adminAuth, addDokanStaff)
+router.post('/add', auth, addDokanStaff)
+router.get('/', auth, getAllStaff)
 
 module.exports = router
